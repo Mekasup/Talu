@@ -1,0 +1,210 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="DatabaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Album">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nom" Type="nvarchar" MaxLength="50" />
+          <Property Name="DateDeSortie" Type="date" />
+          <Property Name="ImagePochette" Type="nvarchar" MaxLength="100" />
+          <Property Name="IdGroupe" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Groupe">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nom" Type="nvarchar" MaxLength="50" />
+          <Property Name="Description" Type="nvarchar" MaxLength="400" />
+        </EntityType>
+        <EntityType Name="Musique">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nom" Type="nvarchar" MaxLength="50" />
+          <Property Name="Style" Type="nvarchar" MaxLength="50" />
+          <Property Name="LienTelechargement" Type="nvarchar" MaxLength="200" />
+          <Property Name="LienEcoute" Type="nvarchar" MaxLength="200" />
+          <Property Name="IdAlbum" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="IdAlbum_Musique_ToTableAlbum">
+          <End Role="Album" Type="Self.Album" Multiplicity="1" />
+          <End Role="Musique" Type="Self.Musique" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Album">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Musique">
+              <PropertyRef Name="IdAlbum" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="IdGroupe_Album_ToTableGroupe">
+          <End Role="Groupe" Type="Self.Groupe" Multiplicity="1" />
+          <End Role="Album" Type="Self.Album" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Groupe">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Album">
+              <PropertyRef Name="IdGroupe" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DatabaseModelStoreContainer">
+          <EntitySet Name="Album" EntityType="Self.Album" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Groupe" EntityType="Self.Groupe" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Musique" EntityType="Self.Musique" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="IdAlbum_Musique_ToTableAlbum" Association="Self.IdAlbum_Musique_ToTableAlbum">
+            <End Role="Album" EntitySet="Album" />
+            <End Role="Musique" EntitySet="Musique" />
+          </AssociationSet>
+          <AssociationSet Name="IdGroupe_Album_ToTableGroupe" Association="Self.IdGroupe_Album_ToTableGroupe">
+            <End Role="Groupe" EntitySet="Groupe" />
+            <End Role="Album" EntitySet="Album" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DatabaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Album">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nom" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DateDeSortie" Type="DateTime" Precision="0" />
+          <Property Name="ImagePochette" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="IdGroupe" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Musique" Relationship="Self.IdAlbum_Musique_ToTableAlbum" FromRole="Album" ToRole="Musique" />
+          <NavigationProperty Name="Groupe" Relationship="Self.IdGroupe_Album_ToTableGroupe" FromRole="Album" ToRole="Groupe" />
+        </EntityType>
+        <EntityType Name="Groupe">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nom" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="400" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Album" Relationship="Self.IdGroupe_Album_ToTableGroupe" FromRole="Groupe" ToRole="Album" />
+        </EntityType>
+        <EntityType Name="Musique">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nom" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Style" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LienTelechargement" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="LienEcoute" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="IdAlbum" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Album" Relationship="Self.IdAlbum_Musique_ToTableAlbum" FromRole="Musique" ToRole="Album" />
+        </EntityType>
+        <Association Name="IdAlbum_Musique_ToTableAlbum">
+          <End Role="Album" Type="Self.Album" Multiplicity="1" />
+          <End Role="Musique" Type="Self.Musique" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Album">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Musique">
+              <PropertyRef Name="IdAlbum" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="IdGroupe_Album_ToTableGroupe">
+          <End Role="Groupe" Type="Self.Groupe" Multiplicity="1" />
+          <End Role="Album" Type="Self.Album" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Groupe">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Album">
+              <PropertyRef Name="IdGroupe" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DatabaseEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Album" EntityType="Self.Album" />
+          <EntitySet Name="Groupe" EntityType="Self.Groupe" />
+          <EntitySet Name="Musique" EntityType="Self.Musique" />
+          <AssociationSet Name="IdAlbum_Musique_ToTableAlbum" Association="Self.IdAlbum_Musique_ToTableAlbum">
+            <End Role="Album" EntitySet="Album" />
+            <End Role="Musique" EntitySet="Musique" />
+          </AssociationSet>
+          <AssociationSet Name="IdGroupe_Album_ToTableGroupe" Association="Self.IdGroupe_Album_ToTableGroupe">
+            <End Role="Groupe" EntitySet="Groupe" />
+            <End Role="Album" EntitySet="Album" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DatabaseModelStoreContainer" CdmEntityContainer="DatabaseEntities">
+          <EntitySetMapping Name="Album">
+            <EntityTypeMapping TypeName="DatabaseModel.Album">
+              <MappingFragment StoreEntitySet="Album">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Nom" ColumnName="Nom" />
+                <ScalarProperty Name="DateDeSortie" ColumnName="DateDeSortie" />
+                <ScalarProperty Name="ImagePochette" ColumnName="ImagePochette" />
+                <ScalarProperty Name="IdGroupe" ColumnName="IdGroupe" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Groupe">
+            <EntityTypeMapping TypeName="DatabaseModel.Groupe">
+              <MappingFragment StoreEntitySet="Groupe">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Nom" ColumnName="Nom" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Musique">
+            <EntityTypeMapping TypeName="DatabaseModel.Musique">
+              <MappingFragment StoreEntitySet="Musique">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Nom" ColumnName="Nom" />
+                <ScalarProperty Name="Style" ColumnName="Style" />
+                <ScalarProperty Name="LienTelechargement" ColumnName="LienTelechargement" />
+                <ScalarProperty Name="LienEcoute" ColumnName="LienEcoute" />
+                <ScalarProperty Name="IdAlbum" ColumnName="IdAlbum" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Aucun" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
