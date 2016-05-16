@@ -1,0 +1,64 @@
+﻿@model Talu.Models.Musique
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Musique</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Nom)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nom)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Style)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Style)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LienTelechargement)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LienTelechargement)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LienEcoute)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LienEcoute)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Album.Nom)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Album.Nom)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

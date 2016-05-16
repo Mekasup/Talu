@@ -1,0 +1,58 @@
+﻿@model Talu.Models.Musique
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Musique</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Nom)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nom)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Style)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Style)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LienTelechargement)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LienTelechargement)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LienEcoute)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LienEcoute)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Album.Nom)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Album.Nom)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
