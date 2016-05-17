@@ -4,6 +4,52 @@
     ViewBag.Title = "Index";
 }
 
+<h2>Zone de Recherche</h2>
+
+<div>
+    <h4>Rechercher un Auteur</h4>
+    <form name="rechercheParAuteur" method="post">
+        <div class="col-lg-3">
+            Auteur : <select name="auteur" onchange="updateRecherche(this);">
+                @{
+                    List<string> listAuteur = new List<string>();
+                    foreach (var item in Model)
+                    {
+                        if (!listAuteur.Contains(item.Album.Groupe.Nom))
+                        {
+                            listAuteur.Add(item.Album.Groupe.Nom);
+                            <option value="@item.Album.Groupe.Id">@item.Album.Groupe.Nom</option>
+                        }
+                    }
+                }
+            </select>
+        </div>
+        <a id="buttonRechercheAuteur" class="btn btn-primary" href="/Groupes/Details/1">Rechercher</a>
+    </form>
+</div>
+
+<div>
+    <h4>Rechercher un Album</h4>
+    <form name="rechercheParAlbum" method="post">
+        <div class="col-lg-3">
+            Album : <select name="album" onchange="updateRecherche(this);">
+                @{
+                    List<string> listAlbum = new List<string>();
+                    foreach (var item in Model)
+                    {
+                        if (!listAuteur.Contains(item.Album.Nom))
+                        {
+                            listAuteur.Add(item.Album.Nom);
+                            <option value="@item.Album.Id">@item.Album.Nom</option>
+                        }
+                    }
+                }
+            </select>
+        </div>
+        <a id="buttonRechercheAlbum" class="btn btn-primary" href="/Albums/Details/1">Rechercher</a>
+    </form>
+</div>
+
 <h2>Liste des musiques</h2>
 <table class="table">
     <tr>
@@ -54,3 +100,10 @@
 }
 
 </table>
+<script type="text/javascript">
+    function updateRecherche(select)
+    {
+        $("#buttonRechercheAuteur").attr('href', '/Groupes/Details/' + select.value);
+        $("#buttonRechercheAlbum").attr('href', '/Albums/Details/' + select.value);
+    }
+</script>
