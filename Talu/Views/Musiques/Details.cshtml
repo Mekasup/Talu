@@ -56,3 +56,47 @@
     @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
     @Html.ActionLink("Back to List", "Index")
 </p>
+<div id="player"></div>
+<img id="monImage" src="http://upload.wikimedia.org/wikipedia/commons/7/79/Farm-Fresh_control_play.png" />
+
+
+<script>
+    window.lectureVideo = false;
+    var tag = document.createElement('script');
+    tag.src = "https://www.youtube.com/iframe_api";
+    var firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+    var player;
+    function onYouTubeIframeAPIReady()
+    {
+        player = new YT.Player('player',
+            {
+            height: '40',
+            width: '40',
+            videoId: 'kt0g4dWxEBo',
+            events:{ 'onReady': onPlayerReady }
+            });
+    }
+    function onPlayerReady(event)
+    {
+        //event.target.playVideo();
+        window.onload = function ()
+        {
+            monImage.onclick = function()
+            {
+    
+                if (!window.lectureVideo)
+                {
+     
+                    player.playVideo(); 
+                    monImage.setAttribute("src","http://upload.wikimedia.org/wikipedia/commons/9/9b/Farm-Fresh_control_pause_blue.png"); 
+                    window.lectureVideo  = true;
+                }else{ 
+                    player.stopVideo();
+                    monImage.setAttribute("src","http://upload.wikimedia.org/wikipedia/commons/7/79/Farm-Fresh_control_play.png"); 
+                    window.lectureVideo  = false;
+                }
+            }
+        }
+    }
+</script>
