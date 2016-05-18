@@ -6,49 +6,99 @@
 
 <h2>Zone de Recherche</h2>
 
-<div>
-    <h4>Rechercher un Auteur</h4>
-    <form name="rechercheParAuteur" method="post">
-        <div class="col-lg-3">
-            Auteur : <select name="auteur" onchange="updateRecherche(this);">
-                @{
-                    List<string> listAuteur = new List<string>();
-                    foreach (var item in Model)
-                    {
-                        if (!listAuteur.Contains(item.Album.Groupe.Nom))
-                        {
-                            listAuteur.Add(item.Album.Groupe.Nom);
-                            <option value="@item.Album.Groupe.Id">@item.Album.Groupe.Nom</option>
+<div class="container">
+    <div class="blocGauche">
+        <div>
+            <h4>Rechercher un Auteur</h4>
+            <form name="rechercheParAuteur" method="post">
+                <div>
+                    Auteur : <select name="auteur" onchange="updateRecherche(this);">
+                        @{
+                            List<string> listAuteur = new List<string>();
+                            foreach (var item in Model)
+                            {
+                                if (!listAuteur.Contains(item.Album.Groupe.Nom))
+                                {
+                                    listAuteur.Add(item.Album.Groupe.Nom);
+                                    <option value="@item.Album.Groupe.Id">@item.Album.Groupe.Nom</option>
+                                }
+                            }
                         }
-                    }
-                }
-            </select>
+                    </select>
+                </div>
+                <a id="buttonRechercheAuteur" class="btn btn-primary" href="/Groupes/Details/1">Rechercher</a>
+            </form>
         </div>
-        <a id="buttonRechercheAuteur" class="btn btn-primary" href="/Groupes/Details/1">Rechercher</a>
-    </form>
+
+        <div>
+            <h4>Rechercher un Album</h4>
+            <form name="rechercheParAlbum" method="post">
+                <div>
+                    Album : <select name="album" onchange="updateRecherche(this);">
+                        @{
+                            List<string> listAlbum = new List<string>();
+                            foreach (var item in Model)
+                            {
+                                if (!listAuteur.Contains(item.Album.Nom))
+                                {
+                                    listAuteur.Add(item.Album.Nom);
+                                    <option value="@item.Album.Id">@item.Album.Nom</option>
+                                }
+                            }
+                        }
+                    </select>
+                </div>
+                <a id="buttonRechercheAlbum" class="btn btn-primary" href="/Albums/Details/1">Rechercher</a>
+            </form>
+        </div>
+    </div>
+
+    <div class="blocDroit">
+        <div>
+            <h4>Rechercher par critères</h4>
+            <form id="formAuteur" name="rechercheParCritereAuteur" method="post">
+                <div>
+                    Auteur : <select id="selectAuteur" name="auteur" onchange="updateRechercheCritere();">
+                                 <option value="0">All</option>
+                        @{
+                            List<string> listAuteur2 = new List<string>();
+                            foreach (var item in Model)
+                            {
+                                if (!listAuteur2.Contains(item.Album.Groupe.Nom))
+                                {
+                                    listAuteur2.Add(item.Album.Groupe.Nom);
+                                    <option value="@item.Album.Groupe.Id">@item.Album.Groupe.Nom</option>
+                                }
+                            }
+                        }
+                    </select>
+                </div>
+            </form>
+        </div>
+        <div>
+            <form id="formAlbum" name="rechercheParCritereAlbum" method="post">
+                <div>
+                    Album : <select id="selectAlbum" name="album" onchange="updateRechercheCritere();">
+                                <option value="0">All</option>
+                        @{
+                            List<string> listAlbum2 = new List<string>();
+                            foreach (var item in Model)
+                            {
+                                if (!listAuteur2.Contains(item.Album.Nom))
+                                {
+                                    listAuteur2.Add(item.Album.Nom);
+                                    <option value="@item.Album.Id">@item.Album.Nom</option>
+                                }
+                            }
+                        }
+                    </select>
+                </div>
+                <a id="buttonRechercheCritere" class="btn btn-primary" href="/Musiques/Recherche/?idAlbum=0&idGroupe=0">Rechercher</a>
+            </form>
+        </div>
+    </div>
 </div>
 
-<div>
-    <h4>Rechercher un Album</h4>
-    <form name="rechercheParAlbum" method="post">
-        <div class="col-lg-3">
-            Album : <select name="album" onchange="updateRecherche(this);">
-                @{
-                    List<string> listAlbum = new List<string>();
-                    foreach (var item in Model)
-                    {
-                        if (!listAuteur.Contains(item.Album.Nom))
-                        {
-                            listAuteur.Add(item.Album.Nom);
-                            <option value="@item.Album.Id">@item.Album.Nom</option>
-                        }
-                    }
-                }
-            </select>
-        </div>
-        <a id="buttonRechercheAlbum" class="btn btn-primary" href="/Albums/Details/1">Rechercher</a>
-    </form>
-</div>
 
 <h2>Liste des musiques</h2>
 <table class="table">
@@ -104,12 +154,18 @@
         </td>-->
     </tr>
 }
-
 </table>
+
 <script type="text/javascript">
     function updateRecherche(select)
     {
         $("#buttonRechercheAuteur").attr('href', '/Groupes/Details/' + select.value);
         $("#buttonRechercheAlbum").attr('href', '/Albums/Details/' + select.value);
+    }
+    function updateRechercheCritere()
+    {
+        $("#buttonRechercheCritere").attr('href', '/Musiques/Recherche/?idAlbum=' + document.getElementById("selectAlbum").value + '&idGroupe=' + document.getElementById("selectAuteur").value);
+        //alert(document.getElementById("selectAuteur").value);
+        //alert(document.getElementById("selectAlbum").value);
     }
 </script>

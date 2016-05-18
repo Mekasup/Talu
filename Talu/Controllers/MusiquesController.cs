@@ -22,6 +22,32 @@ namespace Talu.Controllers
             return View(musique.ToList());
         }
 
+        //GET: Musiques/Recherche
+        public ActionResult Recherche(int? idAlbum, int? idGroupe)
+        {
+            if (idAlbum == null || idGroupe == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            if (idAlbum == 0 && idGroupe == 0)
+            {
+                var musiqueAll = db.Musique.Include(m => m.Album);
+                return View(musiqueAll.ToList());
+            }
+            if (idAlbum == 0)
+            {
+                var musiqueAllAlbum = db.Musique.Where(m => m.Album.IdGroupe == idGroupe);
+                return View(musiqueAllAlbum.ToList());
+            }
+            if (idGroupe == 0)
+            {
+                var musiqueAllGroupe = db.Musique.Where(m => m.IdAlbum == idAlbum);
+                return View(musiqueAllGroupe.ToList());
+            }
+            var musique = db.Musique.Where(m => m.IdAlbum == idAlbum && m.Album.IdGroupe == idGroupe);
+            return View(musique.ToList());
+        }
+
         // GET: Musiques/Details/5
         public ActionResult Details(int? id)
         {

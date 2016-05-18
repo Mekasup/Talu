@@ -16,6 +16,16 @@
     white-space: normal;
 }
 
+.blocGauche {
+    position: relative;
+    float: left;
+}
+
+.blocDroit {
+    position: relative;
+    float: right;
+}
+
 /* Set width on the form input elements since they're 100% wide by default */
 input,
 select,
