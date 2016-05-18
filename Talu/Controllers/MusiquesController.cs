@@ -22,6 +22,13 @@ namespace Talu.Controllers
             return View(musique.ToList());
         }
 
+        //GET: Musiques/RechercheNom
+        public ActionResult RechercheNom(string nom)
+        {
+            var musique = db.Musique.Where(m => m.Nom.Contains(nom));
+            return View(musique.ToList());
+        }
+
         //GET: Musiques/Recherche
         public ActionResult Recherche(int? idAlbum, int? idGroupe)
         {

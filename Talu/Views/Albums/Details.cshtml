@@ -19,8 +19,10 @@
             <!--@Html.DisplayFor(model => model.First().Album.ImagePochette)-->
             @{
                 var source = Model.First().Album.ImagePochette;
-                <img src="@source" style="width : 40%;"/>
-            }
+                <div>
+                    <img src="@source" style="width: 40%;"/>
+                </div>            
+                }
         </dd>
 
         <dt>
@@ -111,3 +113,8 @@
 <p>
     @Html.ActionLink("Back to List", "Index")
 </p>
+
+<script>
+    var cw = $('.child').width();
+    $('.child').css({ 'height': cw + 'px' });
+</script>

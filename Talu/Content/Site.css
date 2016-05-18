@@ -16,13 +16,17 @@
     white-space: normal;
 }
 
+
 .blocGauche {
     position: relative;
     float: left;
 }
 
+.blocMilieu {
+    text-align: center;
+}
+
 .blocDroit {
-    position: relative;
     float: right;
 }
 
@@ -31,8 +35,4 @@ input,
 select,
 textarea {
     max-width: 280px;
-}
-
-.imagepochette {
-    width: 100%;
 }
