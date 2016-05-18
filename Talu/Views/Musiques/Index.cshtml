@@ -69,6 +69,9 @@
             <!--@Html.DisplayNameFor(model => model.Album.Nom)-->
             Nom de l'album
         </th>
+        <th>
+            Nom du groupe
+        </th>
         <th></th>
     </tr>
 
@@ -90,6 +93,9 @@
         <td>
             <!--@Html.DisplayFor(modelItem => item.Album.Nom)-->
             @Html.ActionLink(item.Album.Nom, "Details/" + item.IdAlbum, new { controller = "Albums" })
+        </td>
+        <td>
+            @Html.ActionLink(item.Album.Groupe.Nom, "Details/" + item.Album.IdGroupe, new { controller = "Groupes" })
         </td>
         <!--<td>
             @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
