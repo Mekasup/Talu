@@ -1,4 +1,4 @@
-﻿@model Talu.Models.Album
+﻿@model IEnumerable<Talu.Models.Musique>
 
 @{
     ViewBag.Title = "Details";
@@ -10,41 +10,104 @@
     <h4>Album</h4>
     <hr />
     <dl class="dl-horizontal">
+
         <dt>
-            @Html.DisplayNameFor(model => model.Nom)
+            Image Pochette
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Nom)
+            <!--@Html.DisplayFor(model => model.First().Album.ImagePochette)-->
+            @{
+                var source = Model.First().Album.ImagePochette;
+                <img src="@source" />
+            }
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.DateDeSortie)
+            <!--@Html.DisplayNameFor(model => model.Nom)-->
+            Nom
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.DateDeSortie)
+            @Html.DisplayFor(model => model.First().Album.Nom)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.ImagePochette)
+            Date de Sortie
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.ImagePochette)
+            @Html.DisplayFor(model => model.First().Album.DateDeSortie)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Groupe.Nom)
+            Nom du groupe
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Groupe.Nom)
+           @Html.DisplayFor(model => model.First().Album.Groupe.Nom)
         </dd>
 
     </dl>
 </div>
+
+<h2>Liste des musiques</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Nom)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Style)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LienTelechargement)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LienEcoute)
+        </th>
+        <th>
+            <!--@Html.DisplayNameFor(model => model.Album.Nom)-->
+            Nom de l'album
+        </th>
+        <th>
+            Nom du groupe
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                <!--@Html.DisplayFor(modelItem => item.Nom)-->
+                @Html.ActionLink(item.Nom, "Details", new { id = item.Id })
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Style)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LienTelechargement)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LienEcoute)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Album.Nom)
+            </td>
+            <td>
+                @Html.ActionLink(item.Album.Groupe.Nom, "Details/" + item.Album.IdGroupe, new { controller = "Groupes" })
+            </td>
+            <!--<td>
+                @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+                @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+            </td>-->
+        </tr>
+    }
+</table>
+
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
     @Html.ActionLink("Back to List", "Index")
 </p>

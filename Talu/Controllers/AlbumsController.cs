@@ -34,7 +34,8 @@ namespace Talu.Controllers
             {
                 return HttpNotFound();
             }
-            return View(album);
+            var musique = db.Musique.Where(m => m.IdAlbum == id);
+            return View(musique.ToList());
         }
 
         // GET: Albums/Create
