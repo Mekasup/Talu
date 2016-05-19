@@ -1,12 +1,20 @@
 ﻿body {
     padding-top: 50px;
     padding-bottom: 20px;
+    background: url("http://www.zastavki.com/pictures/originals/2013/Cities_Moon_over_night_city_043876_.jpg") no-repeat center fixed;
+    background-size: cover;
+}
+
+div {
+    
 }
 
 /* Set padding to keep content from hitting the edges */
 .body-content {
     padding-left: 15px;
     padding-right: 15px;
+    background-color: white;
+    opacity: 0.85;
 }
 
 /* Override the default bootstrap behavior where horizontal description lists 
