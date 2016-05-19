@@ -38,7 +38,7 @@
             @Html.DisplayNameFor(model => model.LienEcoute)
         </dt>
 
-        <dd>
+        <dd id="lien">
             @Html.DisplayFor(model => model.LienEcoute)
         </dd>
 
@@ -56,11 +56,33 @@
     @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
     @Html.ActionLink("Back to List", "Index")
 </p>
+<h4>Ecouter la musique :</h4>
 <div id="player"></div>
 <img id="monImage" src="http://upload.wikimedia.org/wikipedia/commons/7/79/Farm-Fresh_control_play.png" />
+<div>
+    <p> </p>
+</div>
+<div>
+    <a class="btn btn-primary" id="btnAchat" onclick="updateAchat()">
+        <img id="imgAchat" src="http://www.icone-png.com/png/14/13585.png" /> <strong id="strongAchat">Acheter</strong>
+    </a>
+    <!--<a href='//www.youtubeinmp3.com/fetch/?video=https://www.youtube.com/watch?v=i62Zjga8JOM' class="btn btn-primary" style='background-color:#03a730;'>
+        <img src='//www.youtubeinmp3.com/icon/folder.png' style='vertical-align:middle;'> <strong>Telecharger</strong>
+    </a>-->
+</div>
 
 
 <script>
+    nameY = document.getElementById('lien').innerHTML.replace(/ /g, "");
+    function updateAchat() {
+        if (confirm("Voulez-vous telecharger cette musique ?"))
+        {
+            $('#btnAchat').attr('href', '//www.youtubeinmp3.com/fetch/?video=https://www.youtube.com/watch?v=' + nameY);
+            $('#btnAchat').attr('style', 'background-color:#03a730;');
+            $('#imgAchat').attr('src', '//www.youtubeinmp3.com/icon/folder.png');
+            $('#strongAchat').text("Telecharger");
+        }
+    }
     window.lectureVideo = false;
     var tag = document.createElement('script');
     tag.src = "https://www.youtube.com/iframe_api";
@@ -71,10 +93,10 @@
     {
         player = new YT.Player('player',
             {
-            height: '40',
-            width: '40',
-            videoId: 'kt0g4dWxEBo',
-            events:{ 'onReady': onPlayerReady }
+                height: '0',
+                width: '0',
+                videoId: nameY,
+                events:{ 'onReady': onPlayerReady }
             });
     }
     function onPlayerReady(event)
@@ -84,16 +106,15 @@
         {
             monImage.onclick = function()
             {
-    
                 if (!window.lectureVideo)
                 {
-     
-                    player.playVideo(); 
-                    monImage.setAttribute("src","http://upload.wikimedia.org/wikipedia/commons/9/9b/Farm-Fresh_control_pause_blue.png"); 
+
+                    player.playVideo();
+                    monImage.setAttribute("src","http://upload.wikimedia.org/wikipedia/commons/9/9b/Farm-Fresh_control_pause_blue.png");
                     window.lectureVideo  = true;
-                }else{ 
+                }else{
                     player.stopVideo();
-                    monImage.setAttribute("src","http://upload.wikimedia.org/wikipedia/commons/7/79/Farm-Fresh_control_play.png"); 
+                    monImage.setAttribute("src","http://upload.wikimedia.org/wikipedia/commons/7/79/Farm-Fresh_control_play.png");
                     window.lectureVideo  = false;
                 }
             }
