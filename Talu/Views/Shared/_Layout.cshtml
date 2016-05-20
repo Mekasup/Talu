@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - Mon application ASP.NET</title>
+    <title>@ViewBag.Title - Projet Talu</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 
@@ -19,17 +19,15 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
                 </button>
                 @Html.ActionLink("Talu", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("À propos de", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                    <li>@Html.ActionLink("All Music", "Index", "Musiques")</li>
-                    <li>@Html.ActionLink("All Albums", "Index", "Albums")</li>
-                    <li>@Html.ActionLink("All Groups", "Index", "Groupes")</li>
+                    <li>@Html.ActionLink("Nous contacter", "Contact", "Home")</li>
+                    <li>@Html.ActionLink("Toutes les musiques", "Index", "Musiques")</li>
+                    <li>@Html.ActionLink("Tous les albums", "Index", "Albums")</li>
+                    <li>@Html.ActionLink("Tous les groupes", "Index", "Groupes")</li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
