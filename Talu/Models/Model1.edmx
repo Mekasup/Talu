@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="DatabaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="DatabaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Album">
           <Key>
             <PropertyRef Name="Id" />
@@ -14,6 +14,16 @@
           <Property Name="DateDeSortie" Type="date" />
           <Property Name="ImagePochette" Type="nvarchar" MaxLength="100" />
           <Property Name="IdGroupe" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Commentaire">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CorpsCommentaire" Type="nvarchar(max)" />
+          <Property Name="IdMusique" Type="int" />
+          <Property Name="Note" Type="int" />
+          <Property Name="NomUser" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Groupe">
           <Key>
@@ -34,6 +44,18 @@
           <Property Name="LienEcoute" Type="nvarchar" MaxLength="200" />
           <Property Name="IdAlbum" Type="int" Nullable="false" />
         </EntityType>
+        <Association Name="FK_Commentaire_ToMusique">
+          <End Role="Musique" Type="Self.Musique" Multiplicity="0..1" />
+          <End Role="Commentaire" Type="Self.Commentaire" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Musique">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Commentaire">
+              <PropertyRef Name="IdMusique" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="IdAlbum_Musique_ToTableAlbum">
           <End Role="Album" Type="Self.Album" Multiplicity="1" />
           <End Role="Musique" Type="Self.Musique" Multiplicity="*" />
@@ -60,8 +82,13 @@
         </Association>
         <EntityContainer Name="DatabaseModelStoreContainer">
           <EntitySet Name="Album" EntityType="Self.Album" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Commentaire" EntityType="Self.Commentaire" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Groupe" EntityType="Self.Groupe" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Musique" EntityType="Self.Musique" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Commentaire_ToMusique" Association="Self.FK_Commentaire_ToMusique">
+            <End Role="Musique" EntitySet="Musique" />
+            <End Role="Commentaire" EntitySet="Commentaire" />
+          </AssociationSet>
           <AssociationSet Name="IdAlbum_Musique_ToTableAlbum" Association="Self.IdAlbum_Musique_ToTableAlbum">
             <End Role="Album" EntitySet="Album" />
             <End Role="Musique" EntitySet="Musique" />
@@ -71,8 +98,7 @@
             <End Role="Album" EntitySet="Album" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="DatabaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -108,6 +134,7 @@
           <Property Name="LienEcoute" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="IdAlbum" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Album" Relationship="Self.IdAlbum_Musique_ToTableAlbum" FromRole="Musique" ToRole="Album" />
+          <NavigationProperty Name="Commentaire" Relationship="DatabaseModel.FK_Commentaire_ToMusique" FromRole="Musique" ToRole="Commentaire" />
         </EntityType>
         <Association Name="IdAlbum_Musique_ToTableAlbum">
           <End Role="Album" Type="Self.Album" Multiplicity="1" />
@@ -145,7 +172,35 @@
             <End Role="Groupe" EntitySet="Groupe" />
             <End Role="Album" EntitySet="Album" />
           </AssociationSet>
+          <EntitySet Name="Commentaire" EntityType="DatabaseModel.Commentaire" />
+          <AssociationSet Name="FK_Commentaire_ToMusique" Association="DatabaseModel.FK_Commentaire_ToMusique">
+            <End Role="Musique" EntitySet="Musique" />
+            <End Role="Commentaire" EntitySet="Commentaire" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="Commentaire">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CorpsCommentaire" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IdMusique" Type="Int32" />
+          <Property Name="Note" Type="Int32" />
+          <Property Name="NomUser" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Musique" Relationship="DatabaseModel.FK_Commentaire_ToMusique" FromRole="Commentaire" ToRole="Musique" />
+        </EntityType>
+        <Association Name="FK_Commentaire_ToMusique">
+          <End Type="DatabaseModel.Musique" Role="Musique" Multiplicity="0..1" />
+          <End Type="DatabaseModel.Commentaire" Role="Commentaire" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Musique">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Commentaire">
+              <PropertyRef Name="IdMusique" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -181,6 +236,17 @@
                 <ScalarProperty Name="LienTelechargement" ColumnName="LienTelechargement" />
                 <ScalarProperty Name="LienEcoute" ColumnName="LienEcoute" />
                 <ScalarProperty Name="IdAlbum" ColumnName="IdAlbum" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Commentaire">
+            <EntityTypeMapping TypeName="DatabaseModel.Commentaire">
+              <MappingFragment StoreEntitySet="Commentaire">
+                <ScalarProperty Name="NomUser" ColumnName="NomUser" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="IdMusique" ColumnName="IdMusique" />
+                <ScalarProperty Name="CorpsCommentaire" ColumnName="CorpsCommentaire" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

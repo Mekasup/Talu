@@ -39,7 +39,7 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.First().Album.DateDeSortie)
+            @Html.DisplayFor(model => model.First().Album.DateDeSortie).ToString().Remove(10)
         </dd>
 
         <dt>
@@ -84,7 +84,7 @@
         <tr>
             <td>
                 <!--@Html.DisplayFor(modelItem => item.Nom)-->
-                @Html.ActionLink(item.Nom, "Details", new { id = item.Id })
+                @Html.ActionLink(item.Nom, "Details/" + item.Id, new { controller = "Musiques" })
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Style)

@@ -14,6 +14,12 @@ namespace Talu.Models
     
     public partial class Musique
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Musique()
+        {
+            this.Commentaire = new HashSet<Commentaire>();
+        }
+    
         public int Id { get; set; }
         public string Nom { get; set; }
         public string Style { get; set; }
@@ -22,5 +28,7 @@ namespace Talu.Models
         public int IdAlbum { get; set; }
     
         public virtual Album Album { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Commentaire> Commentaire { get; set; }
     }
 }

@@ -210,6 +210,9 @@
     <Compile Include="Models\Album.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Commentaire.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Groupe.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>

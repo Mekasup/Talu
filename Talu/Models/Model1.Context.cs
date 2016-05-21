@@ -28,5 +28,6 @@ namespace Talu.Models
         public virtual DbSet<Album> Album { get; set; }
         public virtual DbSet<Groupe> Groupe { get; set; }
         public virtual DbSet<Musique> Musique { get; set; }
+        public virtual DbSet<Commentaire> Commentaire { get; set; }
     }
 }
