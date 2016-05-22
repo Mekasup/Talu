@@ -70,6 +70,30 @@ namespace Talu.Controllers
             return View(musique);
         }
 
+        //POST: Musiques/Details
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Details(int? id, string userName, string Corps, int Note)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Musique musique = db.Musique.Find(id);
+            if (musique == null)
+            {
+                return HttpNotFound();
+            }
+            Commentaire commentaire = new Commentaire();
+                commentaire.IdMusique = id;
+                commentaire.NomUser = userName;
+                commentaire.CorpsCommentaire = Corps;
+                commentaire.Note = Note;
+            db.Commentaire.Add(commentaire);
+            db.SaveChanges();
+            return View(musique);
+        }
+
         // GET: Musiques/Create
         public ActionResult Create()
         {

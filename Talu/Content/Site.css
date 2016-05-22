@@ -35,6 +35,14 @@
     margin-right: 5%;
 }
 
+textarea {
+    resize: none;
+}
+
+.UserName {
+    color: forestgreen;
+}
+
 /* Set width on the form input elements since they're 100% wide by default */
 input,
 select,
