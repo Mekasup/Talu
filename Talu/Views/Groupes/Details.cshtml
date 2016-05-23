@@ -32,3 +32,44 @@
     @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
     @Html.ActionLink("Back to List", "Index")
 </p>
+
+<h2>Listes des albums du groupe @Model.Nom</h2>
+
+<table class="table">
+    <tr>
+        <th class="col-lg-2">
+            @Html.DisplayNameFor(model => model.Album.First().ImagePochette)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Album.First().Nom)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Album.First().DateDeSortie)
+        </th>
+        <th>
+            Groupe
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model.Album.Where(a => a.IdGroupe == Model.Id))
+    {
+        <tr>
+            <td>
+                @{
+                    var source = item.ImagePochette;
+                    <img src="@source" style="width : 40%;" />
+                }
+            </td>
+            <td>
+                @Html.ActionLink(item.Nom, "Details/" + item.Id, new { controller = "Albums" })
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateDeSortie).ToString().Remove(10)
+            </td>
+            <td>
+                @item.Groupe.Nom
+            </td>
+        </tr>
+    }
+</table>
