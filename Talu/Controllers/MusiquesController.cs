@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Talu.Models;
+using Microsoft.AspNet.Identity;
 
 namespace Talu.Controllers
 {
@@ -80,7 +81,7 @@ namespace Talu.Controllers
         //POST: Musiques/Details
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Details(int? id, string userName, string Corps, int Note)
+        public ActionResult Details(int? id, string playlist, string userName, string Corps, int Note=0)
         {
             if (id == null)
             {
@@ -91,13 +92,24 @@ namespace Talu.Controllers
             {
                 return HttpNotFound();
             }
-            Commentaire commentaire = new Commentaire();
-                commentaire.IdMusique = id;
-                commentaire.NomUser = userName;
-                commentaire.CorpsCommentaire = Corps;
-                commentaire.Note = Note;
-            db.Commentaire.Add(commentaire);
-            db.SaveChanges();
+            if (Note != 0)
+            {
+                Commentaire commentaire = new Commentaire();
+                    commentaire.IdMusique = id;
+                    commentaire.NomUser = userName;
+                    commentaire.CorpsCommentaire = Corps;
+                    commentaire.Note = Note;
+                    db.Commentaire.Add(commentaire);
+                    db.SaveChanges();
+            }
+            else
+            {
+                Playlist newEntree = new Playlist();
+                    newEntree.IdMusique = musique.Id;
+                    newEntree.UserName = User.Identity.GetUserName();
+                    db.Playlist.Add(newEntree);
+                    db.SaveChanges();
+            }
             return View(musique);
         }
 

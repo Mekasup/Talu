@@ -12,6 +12,7 @@
         <th style="text-align: center;">
             Nom de la musique
         </th>
+        <th></th>
     </tr>
 
     @foreach (var item in Model.Where(p => p.UserName == User.Identity.GetUserName()))

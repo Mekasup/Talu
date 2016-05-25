@@ -87,7 +87,21 @@
     <div class="col-md-3">
         <h4>Poster un commentaire</h4>
     </div>
-    <div class="col-md-7"></div>
+    <div class="col-md-7">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            if (Model.Playlist.Where(p => p.UserName == User.Identity.GetUserName()).Count() == 0)
+            {
+                <input id="playlist" name="playlist" type="submit" value="Ajouter à ma playlist" class="btn btn-primary"/>
+            }
+            else
+            {
+                <input id="playlist" name="playlist" type="submit" value="Non" hidden/>
+                <p class="form-control" style="width: 45%;">Cette musique est déjà dans votre playlist</p>
+            }
+        }
+    </div>
     <div class="col-md-2">
         <h4>Notes</h4>
     </div>
