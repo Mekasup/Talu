@@ -18,6 +18,7 @@ namespace Talu.Models
         public Musique()
         {
             this.Commentaire = new HashSet<Commentaire>();
+            this.Playlist = new HashSet<Playlist>();
         }
     
         public int Id { get; set; }
@@ -30,5 +31,7 @@ namespace Talu.Models
         public virtual Album Album { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Commentaire> Commentaire { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Playlist> Playlist { get; set; }
     }
 }

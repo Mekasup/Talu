@@ -1,0 +1,27 @@
+﻿@model IEnumerable<Talu.Models.Playlist>
+@using Microsoft.AspNet.Identity
+
+@{
+    ViewBag.Title = "Playlist";
+}
+
+<h2>Ma playlist</h2>
+
+<table class="table">
+    <tr>
+        <th style="text-align: center;">
+            Nom de la musique
+        </th>
+    </tr>
+
+    @foreach (var item in Model.Where(p => p.UserName == User.Identity.GetUserName()))
+    {
+        <tr>
+            <td style="text-align: center;">
+                @Html.ActionLink(item.Musique.Nom, "Details/" + item.Musique.Id, new { controller = "Musiques" })
+            </td>
+        </tr>
+    }
+
+</table>
+

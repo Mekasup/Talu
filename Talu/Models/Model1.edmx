@@ -44,6 +44,14 @@
           <Property Name="LienEcoute" Type="nvarchar" MaxLength="200" />
           <Property Name="IdAlbum" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="Playlist">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdMusique" Type="int" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="50" />
+        </EntityType>
         <Association Name="FK_Commentaire_ToMusique">
           <End Role="Musique" Type="Self.Musique" Multiplicity="0..1" />
           <End Role="Commentaire" Type="Self.Commentaire" Multiplicity="*" />
@@ -52,6 +60,18 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Commentaire">
+              <PropertyRef Name="IdMusique" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PlayListe_ToMusique">
+          <End Role="Musique" Type="Self.Musique" Multiplicity="0..1" />
+          <End Role="Playlist" Type="Self.Playlist" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Musique">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Playlist">
               <PropertyRef Name="IdMusique" />
             </Dependent>
           </ReferentialConstraint>
@@ -85,9 +105,14 @@
           <EntitySet Name="Commentaire" EntityType="Self.Commentaire" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Groupe" EntityType="Self.Groupe" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Musique" EntityType="Self.Musique" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Playlist" EntityType="Self.Playlist" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Commentaire_ToMusique" Association="Self.FK_Commentaire_ToMusique">
             <End Role="Musique" EntitySet="Musique" />
             <End Role="Commentaire" EntitySet="Commentaire" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PlayListe_ToMusique" Association="Self.FK_PlayListe_ToMusique">
+            <End Role="Musique" EntitySet="Musique" />
+            <End Role="Playlist" EntitySet="Playlist" />
           </AssociationSet>
           <AssociationSet Name="IdAlbum_Musique_ToTableAlbum" Association="Self.IdAlbum_Musique_ToTableAlbum">
             <End Role="Album" EntitySet="Album" />
@@ -135,6 +160,7 @@
           <Property Name="IdAlbum" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Album" Relationship="Self.IdAlbum_Musique_ToTableAlbum" FromRole="Musique" ToRole="Album" />
           <NavigationProperty Name="Commentaire" Relationship="DatabaseModel.FK_Commentaire_ToMusique" FromRole="Musique" ToRole="Commentaire" />
+          <NavigationProperty Name="Playlist" Relationship="DatabaseModel.FK_PlayListe_ToMusique" FromRole="Musique" ToRole="Playlist" />
         </EntityType>
         <Association Name="IdAlbum_Musique_ToTableAlbum">
           <End Role="Album" Type="Self.Album" Multiplicity="1" />
@@ -177,6 +203,11 @@
             <End Role="Musique" EntitySet="Musique" />
             <End Role="Commentaire" EntitySet="Commentaire" />
           </AssociationSet>
+          <EntitySet Name="Playlist" EntityType="DatabaseModel.Playlist" />
+          <AssociationSet Name="FK_PlayListe_ToMusique" Association="DatabaseModel.FK_PlayListe_ToMusique">
+            <End Role="Musique" EntitySet="Musique" />
+            <End Role="Playlist" EntitySet="Playlist" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Commentaire">
           <Key>
@@ -197,6 +228,27 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Commentaire">
+              <PropertyRef Name="IdMusique" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Playlist">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdMusique" Type="Int32" />
+          <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Musique" Relationship="DatabaseModel.FK_PlayListe_ToMusique" FromRole="Playlist" ToRole="Musique" />
+        </EntityType>
+        <Association Name="FK_PlayListe_ToMusique">
+          <End Type="DatabaseModel.Musique" Role="Musique" Multiplicity="0..1" />
+          <End Type="DatabaseModel.Playlist" Role="Playlist" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Musique">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Playlist">
               <PropertyRef Name="IdMusique" />
             </Dependent>
           </ReferentialConstraint>
@@ -246,6 +298,15 @@
                 <ScalarProperty Name="Note" ColumnName="Note" />
                 <ScalarProperty Name="IdMusique" ColumnName="IdMusique" />
                 <ScalarProperty Name="CorpsCommentaire" ColumnName="CorpsCommentaire" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Playlist">
+            <EntityTypeMapping TypeName="DatabaseModel.Playlist">
+              <MappingFragment StoreEntitySet="Playlist">
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="IdMusique" ColumnName="IdMusique" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

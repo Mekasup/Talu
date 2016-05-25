@@ -22,6 +22,13 @@ namespace Talu.Controllers
             return View(musique.ToList());
         }
 
+        //GET: Playlist
+        public ActionResult Playlist()
+        {
+            var playlist = db.Playlist;
+            return View(playlist.ToList());
+        }
+
         //GET: Musiques/RechercheNom
         public ActionResult RechercheNom(string nom)
         {
