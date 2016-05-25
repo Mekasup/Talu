@@ -6,9 +6,6 @@
 
 <h2>Index</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
 <table class="table">
     <tr>
         <th>
@@ -22,7 +19,7 @@
 
 @foreach (var item in Model) {
     <tr>
-        <td>
+        <td style="text-align: center;">
             @Html.ActionLink(item.Nom, "Details/" + item.Id, new { controller = "Groupes" })
         </td>
         <td>

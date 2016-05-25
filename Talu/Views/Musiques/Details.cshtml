@@ -8,7 +8,7 @@
 <iframe name="hiddenTelechargement" style="display: none;"></iframe>
 
 <div>
-    <h4>Caractéristiques de la musique</h4>
+    <h2>Caractéristiques de la musique</h2>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -27,19 +27,11 @@
             @Html.DisplayFor(model => model.Style)
         </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.LienTelechargement)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.LienTelechargement)
-        </dd>
-
-        <dt>
+        <dt hidden>
             @Html.DisplayNameFor(model => model.LienEcoute)
         </dt>
 
-        <dd id="lien">
+        <dd id="lien" hidden>
             @Html.DisplayFor(model => model.LienEcoute)
         </dd>
 
@@ -49,7 +41,7 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Album.Nom)
+            @Html.ActionLink(Model.Album.Nom, "Details/" + Model.Album.Id, new { controller = "Albums" })
         </dd>
 
         <dt>

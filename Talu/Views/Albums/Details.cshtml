@@ -4,15 +4,12 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
-
 <div>
-    <h4>Album</h4>
+    <h2>@Model.First().Album.Nom</h2>
     <hr />
     <dl class="dl-horizontal">
 
         <dt>
-            Image Pochette
         </dt>
 
         <dd>
@@ -47,7 +44,7 @@
         </dt>
 
         <dd>
-           @Html.DisplayFor(model => model.First().Album.Groupe.Nom)
+           @Html.ActionLink(Model.First().Album.Groupe.Nom, "Details/" + Model.First().Album.Groupe.Id, new { controller = "Groupes" })
         </dd>
 
     </dl>
@@ -62,12 +59,6 @@
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Style)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.LienTelechargement)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.LienEcoute)
         </th>
         <th>
             <!--@Html.DisplayNameFor(model => model.Album.Nom)-->
@@ -90,12 +81,6 @@
                 @Html.DisplayFor(modelItem => item.Style)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.LienTelechargement)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LienEcoute)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.Album.Nom)
             </td>
             <td>
@@ -110,9 +95,9 @@
     }
 </table>
 
-<p>
-    @Html.ActionLink("Back to List", "Index")
-</p>
+<a href="~/Albums/Index" class="btn btn-primary">
+    Retour à la liste complète
+</a>
 
 <script>
     var cw = $('.child').width();
